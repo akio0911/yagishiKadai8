@@ -7,28 +7,17 @@
 
 import UIKit
 
-
 class viewController2: UIViewController {
     @IBOutlet weak var greenNumLabel: UILabel!
     @IBOutlet weak var greenSlider: UISlider!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        greenNumLabel.text = ""
+    override func viewWillAppear(_ animated: Bool) {
+        greenNumLabel.text = String(SliderValueManager.shared.sliderValue)
+        greenSlider.value = SliderValueManager.shared.sliderValue
     }
     
     @IBAction func slider(_ sender: Any) {
-        var sliderNum = greenSlider.value
-        greenNumLabel.text = String(sliderNum)
-        UserDefaults.standard.set(sliderNum, forKey: "sliderValue")
-    }
-    
-    //viewControllerへの値渡し
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        var num = UserDefaults.standard.float(forKey: "sliderValue")
-        greenNumLabel.text = String(num)
-        greenSlider.value = num
+        SliderValueManager.shared.sliderValue = greenSlider.value
+        greenNumLabel.text = String(SliderValueManager.shared.sliderValue)
     }
 }

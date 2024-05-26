@@ -11,26 +11,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var redNumLabel: UILabel!
     @IBOutlet weak var redSlider: UISlider!
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        redNumLabel.text = ""
-    }
-
-
-    @IBAction func slider(_ sender: Any) {
-        var sliderNum = redSlider.value
-        redNumLabel.text = String(sliderNum)
-        UserDefaults.standard.set(sliderNum, forKey: "sliderValue")
-    }
-    
-    //viewController2への値渡し
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        var num = UserDefaults.standard.float(forKey: "sliderValue")
-        redNumLabel.text = String(num)
-        redSlider.value = num
+        redNumLabel.text = ""
+        redNumLabel.text = String(SliderValueManager.shared.sliderValue)
+        redSlider.value = SliderValueManager.shared.sliderValue
     }
+    
+    @IBAction func slider(_ sender: UISlider) {
+        SliderValueManager.shared.sliderValue = redSlider.value
+        redNumLabel.text = String(SliderValueManager.shared.sliderValue)
+    }    
 }
-
